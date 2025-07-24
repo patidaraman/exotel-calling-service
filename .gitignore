@@ -111,3 +111,17 @@ jspm_packages/
 tmp/
 temp/
 
+# Documentation files with example values that trigger secrets scanning
+VAPI_INTEGRATION_GUIDE.md
+WHATSAPP_CHATBOT_SOP.md
+WORKING_ELEMENTOR_VERSION.html
+CORRECTED_FOOTER_CODE.php
+WORKING_CURL_COMMANDS.md
+src/twilio/README.md
+src/twilio/AI_VOICE_SYSTEM.md
+.env.example
+Dockerfile
+docker-compose.yml
+nginx.conf
+src/health-check.js
+

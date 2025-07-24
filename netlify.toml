@@ -5,37 +5,3 @@
 [build.environment]
   NODE_VERSION = "22"
   PNPM_VERSION = "9"
-
-# Configure secrets scanning to exclude documentation and example files
-[build.processing.secrets]
-  enabled = true
-  omit_paths = [
-    "*.md",
-    "*.MD",
-    ".env.example",
-    "VAPI_INTEGRATION_GUIDE.md",
-    "WHATSAPP_CHATBOT_SOP.md",
-    "src/twilio/README.md",
-    "src/twilio/AI_VOICE_SYSTEM.md",
-    "WORKING_ELEMENTOR_VERSION.html",
-    "CORRECTED_FOOTER_CODE.php",
-    "WORKING_CURL_COMMANDS.md",
-    "README.md",
-    "dist/**/*"
-  ]
-  omit_keys = [
-    "PORT",
-    "NODE_ENV",
-    "VAPI_BASE_URL",
-    "EXOTEL_BASE_URL",
-    "TWILIO_PHONE_NUMBER",
-    "SENDGRID_API_KEY",
-    "CHATBOT_SUPPORT_PHONE",
-    "VAPI_PRIVATE_KEY",
-    "VAPI_PUBLIC_KEY",
-    "TWILIO_WHATSAPP_NUMBER"
-  ]
-
-# Skip processing for documentation files
-[build.processing.skip_processing]
-  paths = ["*.md", "*.MD", ".env.example", "WORKING_*.html", "WORKING_*.md"]

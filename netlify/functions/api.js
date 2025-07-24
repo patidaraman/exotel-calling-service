@@ -148,6 +148,73 @@ exports.handler = async (event, context) => {
       }
     }
 
+    // TWILIO WHATSAPP WEBHOOK ENDPOINTS
+    if (path === '/twilio/incoming-whatsapp' && method === 'post') {
+      try {
+        console.log('Incoming WhatsApp webhook:', body);
+        
+        // Parse Twilio webhook data (comes as form-encoded, not JSON)
+        let webhookData = {};
+        if (event.body && !event.body.startsWith('{')) {
+          // Parse form-encoded data
+          const params = new URLSearchParams(event.body);
+          webhookData = Object.fromEntries(params);
+        } else {
+          webhookData = body;
+        }
+
+        const fromNumber = webhookData.From || webhookData.from;
+        const messageBody = webhookData.Body || webhookData.body || webhookData.message;
+        const profileName = webhookData.ProfileName || webhookData.profileName || 'User';
+
+        console.log('WhatsApp message received:', { fromNumber, messageBody, profileName });
+
+        if (!messageBody) {
+          return {
+            statusCode: 200,
+            headers: { 'Content-Type': 'text/xml' },
+            body: '<?xml version="1.0" encoding="UTF-8"?><Response></Response>'
+          };
+        }
+
+        // Process message with chatbot
+        const { AIPoweredAdlyncChatbotService } = require('../../dist/chatbot/services/ai-powered-adlync-chatbot.service');
+        const configService = createMockConfigService();
+        const chatbotService = new AIPoweredAdlyncChatbotService(configService);
+        
+        const chatResponse = await chatbotService.processMessage(messageBody, fromNumber, profileName);
+        
+        // Create TwiML response
+        const twimlResponse = `<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+  <Message>${chatResponse.message}</Message>
+</Response>`;
+
+        console.log('Sending WhatsApp response:', chatResponse.message);
+
+        return {
+          statusCode: 200,
+          headers: { 'Content-Type': 'text/xml' },
+          body: twimlResponse
+        };
+
+      } catch (error) {
+        console.error('WhatsApp webhook error:', error);
+        
+        // Return a fallback response
+        const fallbackResponse = `<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+  <Message>Hello! Thanks for contacting Adlync Solutions. We're AI automation experts with 5+ years experience. Our clients often see 300% lead growth. How can we help transform your business? 🚀</Message>
+</Response>`;
+
+        return {
+          statusCode: 200,
+          headers: { 'Content-Type': 'text/xml' },
+          body: fallbackResponse
+        };
+      }
+    }
+
     // VAPI ENDPOINTS
     if (path.startsWith('/vapi/') || path.startsWith('/api/v1/vapi/')) {
       try {

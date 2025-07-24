@@ -26,6 +26,11 @@
   to = "/.netlify/functions/api/vapi/:splat"
   status = 200
 
+[[redirects]]
+  from = "/twilio/*"
+  to = "/.netlify/functions/api/twilio/:splat"
+  status = 200
+
 # Catch-all redirect for SPA
 [[redirects]]
   from = "/*"

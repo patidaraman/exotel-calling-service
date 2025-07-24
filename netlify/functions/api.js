@@ -17,6 +17,233 @@ const createMockConfigService = () => ({
   get: (key, defaultValue) => process.env[key] || defaultValue
 });
 
+// Comprehensive chatbot response generator (from Twilio controller)
+function generateChatbotResponse(message, from) {
+  const phoneNumber = from.replace('whatsapp:', '');
+
+  // Website Visitor Welcome Message
+  if (
+    message.includes('visited your website') ||
+    message.includes('digital marketing services') ||
+    message.includes('please share details') ||
+    message.includes('would like to know more') ||
+    message.includes('hello! i visited')
+  ) {
+    return `🚀 *Welcome to Adlync Solutions!*
+
+Thank you for visiting our website! I'm your AI assistant ready to help.
+
+*Our Digital Marketing Services:*
+
+🎬 *AI Videos & Content Creation*
+• AI Avatar Spokesperson Videos
+• Product Demo Videos
+• Social Media Content
+• Starting from ₹5,000
+
+📱 *Social Media Marketing*
+• Instagram & Facebook Management
+• Content Creation & Design
+• Paid Advertising Campaigns
+• Packages from ₹15,000/month
+
+🎯 *Complete Digital Solutions*
+• SEO & Google Ads
+• Website Development
+• Lead Generation Systems
+• Custom packages from ₹25,000/month
+
+*Quick Actions:*
+• Type *"pricing"* for detailed pricing
+• Type *"portfolio"* to see our work
+• Type *"consultation"* for free strategy session
+• Type *"services"* for complete service list
+
+*For complete interactive menu with all options, just type* *"hi"*
+
+*What specific service interests you most?*
+
+Our team will respond within 5 minutes! 💬`;
+  }
+
+  // Main Menu Keywords
+  if (
+    !message ||
+    message === 'hi' ||
+    message === 'hii' ||
+    message === 'hello' ||
+    message === 'hey' ||
+    message === 'start' ||
+    message === 'menu' ||
+    message.includes('hi')
+  ) {
+    return `Welcome to Adlync Solutions AI Assistant!
+
+Hi there! I am here to help you with our digital marketing services.
+
+Please choose an option:
+
+1 - AI Videos and Avatar Videos
+2 - Social Media Marketing
+3 - Digital Marketing Solutions
+4 - Our Portfolio and Case Studies
+5 - Pricing and Packages
+6 - Book Free Consultation
+7 - Contact Information
+8 - About Adlync Solutions
+
+Just type the number (1-8) or keyword!
+
+Type "menu" anytime to see options again.`;
+  }
+
+  // Option 1: AI Videos
+  if (
+    message === '1' ||
+    message.includes('ai video') ||
+    message.includes('avatar')
+  ) {
+    return `🎬 *AI Videos & Avatar Videos*
+
+We create stunning AI-powered videos:
+
+✨ *Our AI Video Services:*
+• AI Avatar Spokesperson Videos
+• AI-Generated Product Demos
+• Personalized Video Messages
+• Animated Explainer Videos
+• AI Voice-over & Dubbing
+
+🎯 *Benefits:*
+• Cost-effective than traditional videos
+• Quick turnaround (24-48 hours)
+• Multiple languages support
+• Unlimited revisions
+• Professional quality
+
+💰 *Starting from ₹5,000 per video*
+
+*Want to see samples?* Type *"samples"*
+*Ready to order?* Type *"order"*
+*Back to menu?* Type *"menu"*`;
+  }
+
+  // Option 2: Social Media Marketing
+  if (
+    message === '2' ||
+    message.includes('social media') ||
+    message.includes('marketing')
+  ) {
+    return `📱 *Social Media Marketing*
+
+Grow your business with our expert social media strategies:
+
+🚀 *Our Services:*
+• Instagram & Facebook Management
+• Content Creation & Design
+• Paid Advertising Campaigns
+• Influencer Marketing
+• Analytics & Reporting
+• Community Management
+
+📊 *What You Get:*
+• 30 posts per month
+• Daily story updates
+• Targeted ad campaigns
+• Monthly performance reports
+• 24/7 support
+
+💰 *Packages starting from ₹15,000/month*
+
+*Want custom package?* Type *"custom"*
+*See our work?* Type *"portfolio"*
+*Back to menu?* Type *"menu"*`;
+  }
+
+  // Option 5: Pricing
+  if (
+    message === '5' ||
+    message.includes('pricing') ||
+    message.includes('cost') ||
+    message.includes('price')
+  ) {
+    return `💰 *Pricing & Packages*
+
+Transparent pricing for all budgets:
+
+🎬 *AI Video Packages:*
+• Basic: ₹5,000 (30-sec video)
+• Standard: ₹10,000 (60-sec + revisions)
+• Premium: ₹20,000 (Multiple videos)
+
+📱 *Social Media Packages:*
+• Starter: ₹15,000/month
+• Growth: ₹25,000/month
+• Enterprise: ₹50,000/month
+
+🚀 *Digital Marketing:*
+• SEO Package: ₹20,000/month
+• Complete Solution: ₹40,000/month
+• Custom Enterprise: ₹1,00,000+/month
+
+🎁 *Special Offers:*
+• 20% off first month
+• Free consultation worth ₹5,000
+• No setup fees
+
+*Custom quote?* Type *"quote"*
+*Ready to start?* Type *"order"*
+*Back to menu?* Type *"menu"*`;
+  }
+
+  // Option 6: Book Consultation
+  if (
+    message === '6' ||
+    message.includes('consultation') ||
+    message.includes('book') ||
+    message === 'quote'
+  ) {
+    return `📅 *Book Your FREE Consultation*
+
+Get expert advice tailored to your business:
+
+🎯 *What You'll Get:*
+• 30-minute strategy session
+• Business analysis & audit
+• Custom marketing plan
+• ROI projections
+• No-obligation proposal
+
+📞 *Book Now:*
+• Call: +91-XXXX-XXXX-XXX
+• Email: consultation@adlyncsolutions.com
+• WhatsApp: Just reply "BOOK NOW"
+
+⏰ *Available Slots:*
+• Monday-Friday: 10 AM - 6 PM
+• Saturday: 10 AM - 2 PM
+• Emergency: 24/7 support
+
+*Book immediately?* Type *"BOOK NOW"*
+*Questions first?* Type *"questions"*
+*Back to menu?* Type *"menu"*`;
+  }
+
+  // Default response for unrecognized input
+  return `🤖 I didn't quite understand that.
+
+Here are some things you can try:
+
+• Type *"menu"* for main options
+• Type *"help"* for assistance
+• Type *"contact"* for our details
+• Use numbers 1-8 for specific services
+
+Or simply tell me what you're looking for, and I'll help you find the right solution!
+
+*What can I help you with today?* 🚀`;
+}
+
 exports.handler = async (event, context) => {
   try {
     // Parse the path and method from Netlify event
@@ -164,7 +391,7 @@ exports.handler = async (event, context) => {
         }
 
         const fromNumber = webhookData.From || webhookData.from;
-        const messageBody = webhookData.Body || webhookData.body || webhookData.message;
+        const messageBody = (webhookData.Body || webhookData.body || webhookData.message || '').toLowerCase().trim();
         const profileName = webhookData.ProfileName || webhookData.profileName || 'User';
 
         console.log('WhatsApp message received:', { fromNumber, messageBody, profileName });
@@ -172,45 +399,58 @@ exports.handler = async (event, context) => {
         if (!messageBody) {
           return {
             statusCode: 200,
-            headers: { 'Content-Type': 'text/xml' },
-            body: '<?xml version="1.0" encoding="UTF-8"?><Response></Response>'
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ status: 'ok' })
           };
         }
 
-        // Process message with chatbot
-        const { AIPoweredAdlyncChatbotService } = require('../../dist/chatbot/services/ai-powered-adlync-chatbot.service');
-        const configService = createMockConfigService();
-        const chatbotService = new AIPoweredAdlyncChatbotService(configService);
+        // Use the comprehensive chatbot logic from Twilio controller
+        const responseMessage = generateChatbotResponse(messageBody, fromNumber);
         
-        const chatResponse = await chatbotService.processMessage(messageBody, fromNumber, profileName);
-        
-        // Create TwiML response
-        const twimlResponse = `<?xml version="1.0" encoding="UTF-8"?>
-<Response>
-  <Message>${chatResponse.message}</Message>
-</Response>`;
+        console.log('Sending WhatsApp response:', responseMessage.substring(0, 100) + '...');
 
-        console.log('Sending WhatsApp response:', chatResponse.message);
+        // Send response via Twilio API (not TwiML)
+        const axios = require('axios');
+        const twilioAccountSid = process.env.TWILIO_ACCOUNT_SID;
+        const twilioAuthToken = process.env.TWILIO_AUTH_TOKEN;
+        
+        if (twilioAccountSid && twilioAuthToken) {
+          try {
+            const twilioResponse = await axios.post(
+              `https://api.twilio.com/2010-04-01/Accounts/${twilioAccountSid}/Messages.json`,
+              new URLSearchParams({
+                To: fromNumber,
+                From: webhookData.To || webhookData.to,
+                Body: responseMessage
+              }),
+              {
+                auth: {
+                  username: twilioAccountSid,
+                  password: twilioAuthToken
+                },
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                }
+              }
+            );
+            console.log('✅ WhatsApp response sent successfully:', twilioResponse.data?.sid);
+          } catch (twilioError) {
+            console.error('❌ Failed to send WhatsApp response:', twilioError.response?.data || twilioError.message);
+          }
+        }
 
         return {
           statusCode: 200,
-          headers: { 'Content-Type': 'text/xml' },
-          body: twimlResponse
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: 'ok' })
         };
 
       } catch (error) {
         console.error('WhatsApp webhook error:', error);
-        
-        // Return a fallback response
-        const fallbackResponse = `<?xml version="1.0" encoding="UTF-8"?>
-<Response>
-  <Message>Hello! Thanks for contacting Adlync Solutions. We're AI automation experts with 5+ years experience. Our clients often see 300% lead growth. How can we help transform your business? 🚀</Message>
-</Response>`;
-
         return {
           statusCode: 200,
-          headers: { 'Content-Type': 'text/xml' },
-          body: fallbackResponse
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: 'error', message: error.message })
         };
       }
     }

@@ -10,3 +10,24 @@
 # Disable secrets scanning entirely since we've removed actual secret values
 [build.processing.secrets]
   enabled = false
+
+# Configure for NestJS serverless functions
+[functions]
+  directory = "netlify/functions"
+
+# Redirect all API routes to the serverless function
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/vapi/*"
+  to = "/.netlify/functions/api/vapi/:splat"
+  status = 200
+
+# Catch-all redirect for SPA
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

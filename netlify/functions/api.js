@@ -151,18 +151,69 @@ exports.handler = async (event, context) => {
     // VAPI ENDPOINTS
     if (path.startsWith('/vapi/') || path.startsWith('/api/v1/vapi/')) {
       try {
-        // Simple mock responses for VAPI endpoints
+        // Real VAPI service calls
         if (path.includes('/initiate-call') && method === 'post') {
-          return {
-            statusCode: 200,
-            headers,
-            body: JSON.stringify({
-              success: true,
-              message: 'AI voice call initiated successfully',
-              callId: 'vapi-call-' + Date.now(),
-              data: { phoneNumber: body.phoneNumber, assistantId: body.assistantId }
-            })
+          const axios = require('axios');
+          
+          const vapiPrivateKey = process.env.VAPI_PRIVATE_KEY;
+          const vapiBaseUrl = process.env.VAPI_BASE_URL || 'https://api.vapi.ai';
+          
+          if (!vapiPrivateKey) {
+            return {
+              statusCode: 400,
+              headers,
+              body: JSON.stringify({
+                success: false,
+                message: 'VAPI_PRIVATE_KEY not configured in environment variables'
+              })
+            };
+          }
+
+          const payload = {
+            phoneNumberId: '3f0ba1fc-4de5-46ee-bd82-0ea1aeae9922', // Your Vapi phone number ID
+            customer: {
+              number: body.phoneNumber,
+              name: body.customerName,
+              email: body.customerEmail,
+            },
+            assistantId: body.assistantId,
+            metadata: {
+              source: 'netlify-serverless',
+              ...body.metadata,
+            },
           };
+
+          try {
+            const response = await axios.post(`${vapiBaseUrl}/call`, payload, {
+              headers: {
+                'Authorization': `Bearer ${vapiPrivateKey}`,
+                'Content-Type': 'application/json',
+              },
+              timeout: 30000,
+            });
+
+            return {
+              statusCode: 200,
+              headers,
+              body: JSON.stringify({
+                success: true,
+                callId: response.data?.id,
+                message: 'AI voice call initiated successfully',
+                data: response.data,
+              })
+            };
+          } catch (apiError) {
+            console.error('VAPI API Error:', apiError.response?.data || apiError.message);
+            return {
+              statusCode: 500,
+              headers,
+              body: JSON.stringify({
+                success: false,
+                message: 'Failed to initiate VAPI call',
+                error: apiError.response?.data || apiError.message
+              })
+            };
+          }
         }
         
         if (path.includes('/create-assistant') && method === 'post') {

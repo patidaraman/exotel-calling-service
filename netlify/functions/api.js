@@ -85,35 +85,57 @@ exports.handler = async (event, context) => {
     // TWILIO ENDPOINTS
     if (path.startsWith('/api/v1/twilio/') && method === 'post') {
       try {
-        const { TwilioService } = require('../../dist/twilio/twilio.service');
-        const { HttpService } = require('@nestjs/axios');
-        const configService = createMockConfigService();
-        
-        // Mock HttpService
-        const httpService = {
-          post: () => ({ toPromise: () => Promise.resolve({ data: { success: true } }) })
-        };
-        
-        const twilioService = new TwilioService(configService, httpService);
-
+        // Simple mock responses for Twilio endpoints
         if (path === '/api/v1/twilio/initiate-call') {
-          const response = await twilioService.initiateCall(body);
-          return { statusCode: 200, headers, body: JSON.stringify(response) };
+          return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify({
+              success: true,
+              message: 'Call initiated successfully',
+              callId: 'mock-call-' + Date.now(),
+              data: { phoneNumber: body.phoneNumber, status: 'initiated' }
+            })
+          };
         }
         
         if (path === '/api/v1/twilio/send-sms') {
-          const response = await twilioService.sendSMS(body);
-          return { statusCode: 200, headers, body: JSON.stringify(response) };
+          return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify({
+              success: true,
+              message: 'SMS sent successfully',
+              messageId: 'mock-sms-' + Date.now(),
+              data: { to: body.to, message: body.message }
+            })
+          };
         }
         
         if (path === '/api/v1/twilio/send-whatsapp') {
-          const response = await twilioService.sendWhatsApp(body);
-          return { statusCode: 200, headers, body: JSON.stringify(response) };
+          return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify({
+              success: true,
+              message: 'WhatsApp message sent successfully',
+              messageId: 'mock-wa-' + Date.now(),
+              data: { to: body.to, message: body.message }
+            })
+          };
         }
         
         if (path === '/api/v1/twilio/send-email') {
-          const response = await twilioService.sendEmail(body);
-          return { statusCode: 200, headers, body: JSON.stringify(response) };
+          return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify({
+              success: true,
+              message: 'Email sent successfully',
+              messageId: 'mock-email-' + Date.now(),
+              data: { to: body.to, subject: body.subject }
+            })
+          };
         }
         
       } catch (error) {
@@ -129,36 +151,72 @@ exports.handler = async (event, context) => {
     // VAPI ENDPOINTS
     if (path.startsWith('/vapi/') || path.startsWith('/api/v1/vapi/')) {
       try {
-        const { VapiService } = require('../../dist/vapi/vapi.service');
-        const { HttpService } = require('@nestjs/axios');
-        const configService = createMockConfigService();
-        
-        // Mock HttpService for VAPI
-        const httpService = {
-          post: () => ({ toPromise: () => Promise.resolve({ data: { success: true, id: 'mock-id' } }) }),
-          get: () => ({ toPromise: () => Promise.resolve({ data: { success: true } }) })
-        };
-        
-        const vapiService = new VapiService(configService, httpService);
-
+        // Simple mock responses for VAPI endpoints
         if (path.includes('/initiate-call') && method === 'post') {
-          const response = await vapiService.initiateCall(body);
-          return { statusCode: 200, headers, body: JSON.stringify(response) };
+          return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify({
+              success: true,
+              message: 'AI voice call initiated successfully',
+              callId: 'vapi-call-' + Date.now(),
+              data: { phoneNumber: body.phoneNumber, assistantId: body.assistantId }
+            })
+          };
         }
         
         if (path.includes('/create-assistant') && method === 'post') {
-          const response = await vapiService.createAssistant();
-          return { statusCode: 200, headers, body: JSON.stringify(response) };
+          return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify({
+              success: true,
+              message: 'Assistant created successfully',
+              data: {
+                id: 'assistant-' + Date.now(),
+                name: 'Adlync Solutions AI Assistant',
+                status: 'active'
+              }
+            })
+          };
         }
         
         if (path.includes('/assistants') && method === 'get') {
-          const response = await vapiService.listAssistants();
-          return { statusCode: 200, headers, body: JSON.stringify(response) };
+          return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify({
+              success: true,
+              message: 'Assistants retrieved successfully',
+              data: [
+                {
+                  id: 'assistant-1',
+                  name: 'Adlync Solutions AI Assistant',
+                  status: 'active',
+                  created: new Date().toISOString()
+                }
+              ]
+            })
+          };
         }
         
         if (path.includes('/phone-numbers') && method === 'get') {
-          const response = await vapiService.listPhoneNumbers();
-          return { statusCode: 200, headers, body: JSON.stringify(response) };
+          return {
+            statusCode: 200,
+            headers,
+            body: JSON.stringify({
+              success: true,
+              message: 'Phone numbers retrieved successfully',
+              data: [
+                {
+                  id: 'phone-1',
+                  number: '+1234567890',
+                  status: 'active',
+                  provider: 'vapi'
+                }
+              ]
+            })
+          };
         }
         
       } catch (error) {

@@ -12,7 +12,7 @@ async function bootstrap() {
     });
 
     const configService = app.get(ConfigService);
-    const port = configService.get<number>('port') || 3000;
+    const port = configService.get<number>('port') || parseInt(process.env.DEFAULT_PORT, 10);
     const environment = configService.get<string>('app.environment');
 
     // Enable CORS for webhook endpoints

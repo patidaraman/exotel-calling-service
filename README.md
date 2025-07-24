@@ -39,8 +39,8 @@ Update the `.env` file with your Exotel credentials:
 
 ```env
 # Application Configuration
-NODE_ENV=development
-PORT=3000
+NODE_ENV=${NODE_ENV}
+PORT=${PORT}
 APP_BASE_URL=https://your-server.com
 
 # Exotel Configuration
@@ -170,7 +170,7 @@ pnpm run lint
 # Format code
 pnpm run format
 
-# Watch mode for development
+# Watch mode for ${NODE_ENV}
 pnpm run start:dev
 ```
 
@@ -180,8 +180,8 @@ pnpm run start:dev
 
 Ensure the following environment variables are set in production:
 
-- `NODE_ENV=production`
-- `PORT=3000`
+- `NODE_ENV=${NODE_ENV}`
+- `PORT=${PORT}`
 - `APP_BASE_URL=https://your-production-domain.com`
 - `EXOTEL_SID=your-production-sid`
 - `EXOTEL_TOKEN=your-production-token`
@@ -196,7 +196,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci --only=production
 COPY dist ./dist
-EXPOSE 3000
+EXPOSE ${PORT}
 CMD ["node", "dist/main"]
 ```
 

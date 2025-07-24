@@ -1,5 +1,5 @@
 export default () => ({
-  port: parseInt(process.env.PORT, 10) || 3000,
+  port: parseInt(process.env.PORT, 10) || parseInt(process.env.DEFAULT_PORT, 10),
   exotel: {
     accountSid: process.env.EXOTEL_ACCOUNT_SID,
     apiKey: process.env.EXOTEL_API_KEY,
@@ -21,6 +21,6 @@ export default () => ({
   },
   app: {
     baseUrl: process.env.APP_BASE_URL,
-    environment: process.env.NODE_ENV || 'development',
+    environment: process.env.NODE_ENV || process.env.DEFAULT_ENV,
   },
 });

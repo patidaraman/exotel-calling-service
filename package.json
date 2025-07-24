@@ -21,16 +21,16 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "docker:build": "docker build -t exotel-calling-service .",
-    "docker:run": "docker run -p 3000:3000 --env-file .env exotel-calling-service",
+    "docker:run": "docker run -p ${PORT}:${PORT} --env-file .env exotel-calling-service",
     "docker:compose:up": "docker-compose up -d",
     "docker:compose:down": "docker-compose down",
     "docker:compose:logs": "docker-compose logs -f",
-    "health:check": "curl -f http://localhost:3000/api/v1/exotel/health || exit 1",
+    "health:check": "curl -f http://localhost:${PORT}/api/v1/exotel/health || exit 1",
     "precommit": "npm run lint:check && npm run test",
     "prepare": "husky install || true",
     "chatbot:setup": "node scripts/setup-chatbot.js",
-    "chatbot:test": "curl -X POST http://localhost:3000/api/v1/chatbot/chat -H 'Content-Type: application/json' -d '{\"message\": \"What services do you offer?\"}'",
-    "chatbot:stats": "curl http://localhost:3000/api/v1/chatbot/knowledge-base/stats"
+    "chatbot:test": "curl -X POST http://localhost:${PORT}/api/v1/chatbot/chat -H 'Content-Type: application/json' -d '{\"message\": \"What services do you offer?\"}'",
+    "chatbot:stats": "curl http://localhost:${PORT}/api/v1/chatbot/knowledge-base/stats"
   },
   "dependencies": {
     "@nestjs/axios": "^4.0.0",

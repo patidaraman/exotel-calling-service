@@ -160,7 +160,7 @@ Always end the call like a friend:
             Authorization: `Bearer ${this.privateKey}`,
             'Content-Type': 'application/json',
           },
-          timeout: 30000, // Increase to 30 seconds
+          timeout: parseInt(process.env.VAPI_TIMEOUT, 10) || 30000,
         }),
       );
 

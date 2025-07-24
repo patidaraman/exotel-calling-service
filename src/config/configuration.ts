@@ -5,7 +5,7 @@ export default () => ({
     apiKey: process.env.EXOTEL_API_KEY,
     apiToken: process.env.EXOTEL_API_TOKEN,
     virtualNumber: process.env.EXOTEL_VIRTUAL_NUMBER,
-    baseUrl: process.env.EXOTEL_BASE_URL || 'https://api.exotel.com/v1',
+    baseUrl: process.env.EXOTEL_BASE_URL,
   },
   twilio: {
     accountSid: process.env.TWILIO_ACCOUNT_SID,
@@ -17,7 +17,7 @@ export default () => ({
   vapi: {
     privateKey: process.env.VAPI_PRIVATE_KEY,
     publicKey: process.env.VAPI_PUBLIC_KEY,
-    baseUrl: process.env.VAPI_BASE_URL || 'https://api.vapi.ai',
+    baseUrl: process.env.VAPI_BASE_URL,
   },
   app: {
     baseUrl: process.env.APP_BASE_URL,

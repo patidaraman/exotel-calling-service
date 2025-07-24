@@ -47,7 +47,7 @@ APP_BASE_URL=https://your-server.com
 EXOTEL_SID=your-exotel-sid
 EXOTEL_TOKEN=your-exotel-token
 EXOTEL_VIRTUAL_NUMBER=your-exophone
-EXOTEL_BASE_URL=https://api.exotel.com/v1
+EXOTEL_BASE_URL=your-exotel-api-url
 ```
 
 ## Running the Application

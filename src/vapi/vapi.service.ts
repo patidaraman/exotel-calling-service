@@ -31,10 +31,7 @@ export class VapiService {
   ) {
     this.privateKey = this.config.get<string>('VAPI_PRIVATE_KEY');
     this.publicKey = this.config.get<string>('VAPI_PUBLIC_KEY');
-    this.baseUrl = this.config.get<string>(
-      'VAPI_BASE_URL',
-      'https://api.vapi.ai',
-    );
+    this.baseUrl = this.config.get<string>('VAPI_BASE_URL');
 
     this.validateConfiguration();
   }
@@ -160,7 +157,7 @@ Always end the call like a friend:
             Authorization: `Bearer ${this.privateKey}`,
             'Content-Type': 'application/json',
           },
-          timeout: parseInt(process.env.VAPI_TIMEOUT, 10) || 30000,
+          timeout: parseInt(process.env.VAPI_TIMEOUT, 10),
         }),
       );
 

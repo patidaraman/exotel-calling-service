@@ -34,7 +34,7 @@ export class AIPoweredAdlyncChatbotService {
   // Adlync Solutions Knowledge Base for AI Context
   private readonly adlyncKnowledgeBase = `
 ADLYNC SOLUTIONS - COMPANY INFORMATION:
-Adlync Solutions is a leading digital marketing startup specializing in AI-powered business automation with 5+ years of expertise in AI development.
+Adlync Solutions is a leading digital marketing startup specializing in AI-powered business automation with 5+ years of expertise in AI tech.
 
 SERVICES WE PROVIDE:
 
@@ -109,7 +109,7 @@ SERVICES WE PROVIDE:
 - Perfect performance optimization
 
 PRICING & CONSULTATION:
-- AI Chatbots: 2-4 weeks development time
+- AI Chatbots: 2-4 weeks build time
 - AI Agents: 3-6 weeks depending on complexity
 - Custom solutions with significant ROI potential
 - FREE strategy sessions and consultations available
@@ -130,7 +130,7 @@ CLIENT TESTIMONIALS:
 CONTACT & CONSULTATION:
 - Free 15-minute discovery calls available
 - Free strategy sessions for business analysis
-- Custom AI solution roadmap development
+- Custom AI solution roadmap creation
 - ROI projections and implementation timelines
 - Expert AI consultation and recommendations
 `;

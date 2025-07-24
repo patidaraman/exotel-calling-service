@@ -5,3 +5,17 @@
 [build.environment]
   NODE_VERSION = "22"
   PNPM_VERSION = "9"
+
+# Configure secrets scanning to omit environment variable names
+[build.processing.secrets]
+  enabled = true
+  omit_keys = [
+    "NODE_ENV",
+    "PORT",
+    "EXOTEL_BASE_URL",
+    "VAPI_BASE_URL"
+  ]
+  omit_paths = [
+    "dist/**/*",
+    ".gitignore"
+  ]

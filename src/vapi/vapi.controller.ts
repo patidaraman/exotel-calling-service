@@ -35,6 +35,22 @@ export class InitiateVapiCallDto {
   metadata?: Record<string, any>;
 }
 
+export class VapiChatDto {
+  @IsString()
+  message: string;
+
+  @IsString()
+  userId: string;
+
+  @IsOptional()
+  @IsString()
+  source?: string;
+
+  @IsOptional()
+  @IsString()
+  assistantId?: string;
+}
+
 @Controller('vapi')
 export class VapiController {
   private readonly logger = new Logger(VapiController.name);
@@ -145,6 +161,21 @@ export class VapiController {
     }
 
     return { status: 'OK' };
+  }
+
+  // VAPI Assistant Chat (uses your exact VAPI prompt)
+  @Post('assistant-chat')
+  @HttpCode(HttpStatus.OK)
+  @UsePipes(new ValidationPipe({ transform: true, whitelist: true }))
+  async chatWithAssistant(
+    @Body() chatData: VapiChatDto,
+  ): Promise<any> {
+    this.logger.log(
+      `💬 VAPI Assistant chat from user: ${chatData.userId}`,
+    );
+    this.logger.log(`📝 Message: ${chatData.message}`);
+
+    return this.vapiService.chatWithAssistant(chatData);
   }
 
   // Health Check

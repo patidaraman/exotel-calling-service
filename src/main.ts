@@ -19,7 +19,15 @@ async function bootstrap() {
     app.enableCors({
       origin: true,
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-      allowedHeaders: ['Content-Type', 'Authorization'],
+      allowedHeaders: [
+        'Content-Type',
+        'Authorization',
+        'ngrok-skip-browser-warning',
+        'X-Requested-With',
+        'Accept',
+        'Origin'
+      ],
+      credentials: true,
     });
 
     // Global validation pipe
@@ -70,7 +78,10 @@ async function bootstrap() {
     logger.log(`   - Exotel: http://localhost:${port}/api/v1/exotel/health`);
     logger.log(`   - Twilio: http://localhost:${port}/api/v1/twilio/health`);
     logger.log(`   - Chatbot: http://localhost:${port}/api/v1/chatbot/health`);
+    logger.log(`   - VAPI: http://localhost:${port}/api/v1/vapi/health`);
     logger.log(`🤖 Chatbot API: http://localhost:${port}/api/v1/chatbot/chat`);
+    logger.log(`🎙️ VAPI Assistant Chat: http://localhost:${port}/api/v1/vapi/assistant-chat`);
+    logger.log(`📞 VAPI Call Initiate: http://localhost:${port}/api/v1/vapi/initiate-call`);
   } catch (error) {
     logger.error('❌ Error starting the application', error);
     process.exit(1);

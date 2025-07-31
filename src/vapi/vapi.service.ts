@@ -259,7 +259,7 @@ Always end your interaction warmly and politely:
       this.logger.log(`🎙️ Initiating Vapi call to: ${callRequest.phoneNumber}`);
 
       const payload = {
-        phoneNumberId: '3f0ba1fc-4de5-46ee-bd82-0ea1aeae9922', // Your Vapi phone number ID
+        phoneNumberId: '0c992aba-fe47-4fde-b202-dd882dc91cf7', // Your Vapi phone number ID
         customer: {
           number: callRequest.phoneNumber, // Customer number to call
           name: callRequest.customerName,

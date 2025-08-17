@@ -477,7 +477,8 @@ exports.handler = async (event, context) => {
           }
 
           const payload = {
-            phoneNumberId: '0c992aba-fe47-4fde-b202-dd882dc91cf7', // Your Vapi phone number ID
+            // phoneNumberId: '0c992aba-fe47-4fde-b202-dd882dc91cf7', //Adlync
+           phoneNumberId :'508addc2-fdbd-40ff-8ddf-1f273daaef4a',
             customer: {
               number: body.phoneNumber,
               name: body.customerName,
